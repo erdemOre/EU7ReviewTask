@@ -14,6 +14,13 @@ public abstract class  BasePage {
     @FindBy(css = "#twotabsearchtextbox")
     public WebElement searchBox;
 
+    @FindBy(xpath = "//div[@class='nav-search-submit nav-sprite']")
+    public WebElement searchSubmitBox;
+
+
+
+
+
 
 
 
