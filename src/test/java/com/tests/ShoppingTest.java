@@ -1,11 +1,21 @@
 package com.tests;
 
+import com.pages.CartPage;
+import com.pages.ItemPage;
+import com.pages.LandingPage;
+import com.pages.SearchResultPage;
+import com.utilities.BrowserUtils;
+import com.utilities.ConfigurationReader;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 public class ShoppingTest extends TestBase{
 
     /*
     Task 1: The task consists on the next steps:
     1. Go to https://www.amazon.com
-    2. Search for "hats for men" (Call from Configuration.properties file)
+    2. Search for "hats for men" (Call from Configuration.properties file)
     3. Add the first hat appearing to Cart with quantity 2
     4. Open cart and assert that the total price and quantity are correct
     5. Reduce the quantity from 2 to 1 in Cart for the item selected in the step 3
@@ -14,6 +24,63 @@ public class ShoppingTest extends TestBase{
     but we'd like you to also demonstrate the coding quality, structure, and style of the deliverables.
 
      */
+
+
+
+    @Test
+    public void test1(){
+        extentLogger = report.createTest("Amazon Shopping");
+        //2. Search for "hats for men" (Call from Configuration.properties file)
+        LandingPage landingPage = new LandingPage();
+        extentLogger.info("Searching for " + ConfigurationReader.get("purchasingItem"));
+        landingPage.searchBox.sendKeys(ConfigurationReader.get("purchasingItem"));
+        landingPage.searchSubmitBox.click();
+
+        // 3. Add the first hat appearing to Cart with quantity 2
+        SearchResultPage searchResultPage = new SearchResultPage();
+        extentLogger.info("Choosing the first item");
+        searchResultPage.firstResult.click();
+
+        ItemPage itemPage = new ItemPage();
+        extentLogger.info("Selecting 2 and adding them to the cart");
+
+        double expectedPrice = itemPage.getGivenPrice();
+        expectedPrice *= Integer.parseInt(ConfigurationReader.get("amazonItemQuantity"));
+
+        itemPage.getSelectQuantity();
+        itemPage.addToCart.click();
+
+
+        //  4. Open cart and assert that the total price and quantity are correct
+        extentLogger.info("Navigating to Cart");
+        itemPage.navCart.click();
+        CartPage cartPage = new CartPage();
+
+        extentLogger.info("Verifying the quantity");
+        String expectedQuantity = ConfigurationReader.get("amazonItemQuantity");
+        BrowserUtils.waitForPageToLoad(5);
+
+        String actualQuantity = cartPage.getSelectedQuantity();
+       /* Select select = new Select(cartPage.selectQnt);
+        String actualQuantity = select.getFirstSelectedOption().getText();*/
+
+        Assert.assertEquals(actualQuantity,expectedQuantity,
+                "verify actual quantity and expected quantity");
+        extentLogger.pass("actual quantity and expected quantity is same: " + actualQuantity);
+
+        extentLogger.info("verify total price is correct");
+        double actualPrice = cartPage.getTotalPrice();
+        Assert.assertTrue(actualPrice == expectedPrice,
+                "actual price and expected price is equal.");
+        extentLogger.pass("expected and actual price is same " + actualPrice);
+
+    }
+
+
+
+
+
+
 
 
 

@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 public class SearchResultPage extends BasePage{
 
     @FindBy(xpath = "//div[@data-component-type='s-search-result'][1]//img")
-    public WebElement firstResultItemPicture;
+    public WebElement firstResult;
 
 
 }
