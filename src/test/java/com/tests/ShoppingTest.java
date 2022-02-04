@@ -44,8 +44,8 @@ public class ShoppingTest extends TestBase{
         ItemPage itemPage = new ItemPage();
         extentLogger.info("Selecting 2 and adding them to the cart");
 
-        double expectedPrice = itemPage.getGivenPrice();
-        expectedPrice *= Integer.parseInt(ConfigurationReader.get("amazonItemQuantity"));
+        double expectedPriceOne = itemPage.getGivenPrice();
+        double expectedPrice = expectedPriceOne * Integer.parseInt(ConfigurationReader.get("amazonItemQuantity"));
 
         itemPage.getSelectQuantity();
         itemPage.addToCart.click();
@@ -61,8 +61,7 @@ public class ShoppingTest extends TestBase{
         BrowserUtils.waitForPageToLoad(5);
 
         String actualQuantity = cartPage.getSelectedQuantity();
-       /* Select select = new Select(cartPage.selectQnt);
-        String actualQuantity = select.getFirstSelectedOption().getText();*/
+
 
         Assert.assertEquals(actualQuantity,expectedQuantity,
                 "verify actual quantity and expected quantity");
@@ -74,18 +73,38 @@ public class ShoppingTest extends TestBase{
                 "actual price and expected price is equal.");
         extentLogger.pass("expected and actual price is same " + actualPrice);
 
+        //5. Reduce the quantity from 2 to 1 in Cart for the item selected in the step 3
+        cartPage.changeSelection(ConfigurationReader.get("amazonItemNewQuantity"));
+
+        //6. Assert that the total price and quantity has been correctly changed
+
+
+        extentLogger.info("Verifying the quantity after change in item quantity");
+        expectedQuantity = ConfigurationReader.get("amazonItemNewQuantity");
+        BrowserUtils.waitForPageToLoad(5);
+        actualQuantity = cartPage.getSelectedQuantity();
+
+
+        Assert.assertEquals(actualQuantity,expectedQuantity,
+                "verify actual quantity and expected quantity");
+        extentLogger.pass("actual quantity and expected quantity is same: " + actualQuantity);
+
+        extentLogger.info("verify total price is correct after change in quantity");
+        actualPrice = cartPage.getTotalPrice();
+        expectedPrice = expectedPriceOne * Integer.parseInt(ConfigurationReader.get("amazonItemNewQuantity"));
+        Assert.assertTrue(actualPrice == expectedPrice,
+                "actual price and expected price is equal.");
+        extentLogger.pass("expected and actual price is same " + actualPrice);
+
+
+
+
+
+
+
+
+
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

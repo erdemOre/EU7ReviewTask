@@ -22,10 +22,17 @@ public class CartPage extends BasePage{
         return quantity;
     }
 
+    public void changeSelection(String quantity){
+        select = new Select(selectQnt);
+        select.selectByVisibleText(quantity);
+    }
+
     public Double getTotalPrice(){
         String price = totalPrice.getText();
         price = price.substring(1);
         return Double.parseDouble(price);
     }
+
+
 
 }
