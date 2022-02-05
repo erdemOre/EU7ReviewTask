@@ -6,6 +6,9 @@ import com.pages.LandingPage;
 import com.pages.SearchResultPage;
 import com.utilities.BrowserUtils;
 import com.utilities.ConfigurationReader;
+import com.utilities.Driver;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -95,6 +98,8 @@ public class ShoppingTest extends TestBase{
         Assert.assertTrue(actualPrice == expectedPrice,
                 "actual price and expected price is equal.");
         extentLogger.pass("expected and actual price is same " + actualPrice);
+
+
 
 
 
