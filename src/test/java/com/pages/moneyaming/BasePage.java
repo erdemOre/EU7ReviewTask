@@ -11,7 +11,7 @@ public abstract class BasePage {
         PageFactory.initElements(Driver.get(),this);
     }
 
-    @FindBy(linkText = "Join Now!")
+    @FindBy(css = ".newUser.green")
     public WebElement joinNowButton;
 
 

@@ -1,5 +1,8 @@
 package com.tests.moneygaming;
 
+import com.pages.moneyaming.MainPage;
+import com.pages.moneyaming.SubmitPage;
+import com.utilities.BrowserUtils;
 import org.testng.annotations.Test;
 
 public class MoneyGamingTest extends TestBase {
@@ -18,5 +21,19 @@ public class MoneyGamingTest extends TestBase {
      */
 
     @Test
+    public void test1(){
+        //2. Click the JOIN NOW button to open the registration page
+        MainPage mainPage = new MainPage();
+        BrowserUtils.waitForPageToLoad(10);
+        mainPage.joinNowButton.click();
+
+
+        // Select a title value from the dropdown
+        SubmitPage submitPage = new SubmitPage();
+        submitPage.selectRandomTitle();
+
+
+
+    }
 
 }
